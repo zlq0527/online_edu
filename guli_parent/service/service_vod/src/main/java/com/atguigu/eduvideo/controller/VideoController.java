@@ -26,4 +26,16 @@ public class VideoController {
 		String videoId = videoservice.uploadvideoByid(file);
 		return R.ok().data("videoId", videoId);
 	}
+
+	@GetMapping("getPlayAuth/{videoId}")
+	public R getPlayAuth(@PathVariable String videoId) {
+		System.out.println("ok");
+		return R.ok();
+	}
+
+	@DeleteMapping("removevideo/{id}")
+	public R removevideo(@PathVariable String id) {
+
+		return R.ok();
+	}
 }

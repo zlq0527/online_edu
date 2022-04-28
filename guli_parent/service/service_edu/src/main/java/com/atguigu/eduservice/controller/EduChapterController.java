@@ -53,7 +53,6 @@ public class EduChapterController {
 
 	@PostMapping("updateChapter")
 	public R updateChapter(@RequestBody EduChapter chapter) {
-		System.out.println("进入修改controller了!!");
 		boolean save = eduChapterService.saveOrUpdate(chapter);
 		if (!save) {
 			throw new GuliException(400, "修改章节失败!");

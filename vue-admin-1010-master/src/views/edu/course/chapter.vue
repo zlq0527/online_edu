@@ -36,7 +36,7 @@
 
               <span class="acts">
 
-                <el-button style="" type="text">编辑</el-button>
+                <el-button style="" type="text" @click="EditVideo(video.id)">编辑</el-button>
                 <el-button type="text" @click="removeVideo(video.id)">删除</el-button>
               </span>
             </p>
@@ -88,7 +88,7 @@
             :before-remove="beforeVodRemove"
             :on-exceed="handleUploadExceed"
             :file-list="fileList"
-            :action="BASE_API+'/eduvod/video/uploadAlyiVideo'"
+            :action="BASE_API+'/eduvideo/video/uploadvideo'"
             :limit="1"
             class="upload-demo">
             <el-button size="small" type="primary">上传视频</el-button>
@@ -200,6 +200,16 @@
               this.getChapterVideo()
             })
         }) // 点击取消，执行catch方法
+      },
+
+      EditVideo(chapterId){
+        this.dialogVideoFormVisible=true
+        alert(1)
+        // video.getmes().then(
+        //   response=>{
+        //
+        //   }
+        // )
       },
       // 添加小节弹框的方法
       openVideo(chapterId) {
