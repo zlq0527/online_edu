@@ -18,7 +18,7 @@ export default {
     asyncData({ params, error }) {
        return vod.getPlayAuthByVideoId(params.vid)
         .then(response => {
-            return { 
+            return {
                 playAuth: response.data.data.playAuth,
                 vid: params.vid
             }
@@ -31,13 +31,13 @@ export default {
             playauth: this.playAuth, // 播放凭证
             encryptType: '1', // 如果播放加密视频，则需设置encryptType=1，非加密视频无需设置此项
             width: '100%',
-            height: '1000px',
+            height: '700px',
             // 以下可选设置
             cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589747065540&di=e79092fe662dc47ad67471089176b699&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Fback_pic%2F02%2F51%2F04%2F8957805860af9a5.jpg', // 封面
             qualitySort: 'asc', // 清晰度排序
 
             mediaType: 'video', // 返回音频还是视频
-            autoplay: true, // 自动播放
+            autoplay: false, // 自动播放
             isLive: false, // 直播
             rePlay: false, // 循环播放
             preload: true,

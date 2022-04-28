@@ -36,7 +36,9 @@ public class Videoserviceimpl implements Videoservice {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		UploadStreamRequest request = new UploadStreamRequest("LTAI5tKQx5bfJBDwi3wR3Sbr", "5LJnXhcn9td45vhM16qiQCeBLpjufN",
+		UploadStreamRequest request = new UploadStreamRequest(
+				"LTAI5tKQx5bfJBDwi3wR3Sbr",
+				"5LJnXhcn9td45vhM16qiQCeBLpjufN",
 				title, originalFilename, inputStream);
 		UploadVideoImpl uploadVideo = new UploadVideoImpl();
 		UploadStreamResponse response = uploadVideo.uploadStream(request);
