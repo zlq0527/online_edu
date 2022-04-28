@@ -1,0 +1,45 @@
+{
+  "groups": [
+    {
+      "name": "wx.open",
+      "type": "com.atguigu.commonutils.WXconstants",
+      "sourceType": "com.atguigu.commonutils.WXconstants"
+    }
+  ],
+  "properties": [
+    {
+      "name": "wx.open.app-id",
+      "type": "java.lang.String",
+      "description": "微信开放平台appId",
+      "sourceType": "com.atguigu.commonutils.WXconstants"
+    },
+    {
+      "name": "wx.open.app-secret",
+      "type": "java.lang.String",
+      "description": "微信开放平台appSecret",
+      "sourceType": "com.atguigu.commonutils.WXconstants"
+    },
+    {
+      "name": "wx.open.redirect-url",
+      "type": "java.lang.String",
+      "description": "微信开放平台 重定向url",
+      "sourceType": "com.atguigu.commonutils.WXconstants"
+    },
+    {
+      "name": "wx.open.w-x-o-p-e-n-a-p-p-i-d",
+      "type": "java.lang.String",
+      "sourceType": "com.atguigu.commonutils.WXconstants"
+    },
+    {
+      "name": "wx.open.w-x-o-p-e-n-a-p-p-s-e-c-r-e-t",
+      "type": "java.lang.String",
+      "sourceType": "com.atguigu.commonutils.WXconstants"
+    },
+    {
+      "name": "wx.open.w-x-o-p-e-n-r-e-d-i-r-e-c-t-u-r-l",
+      "type": "java.lang.String",
+      "sourceType": "com.atguigu.commonutils.WXconstants"
+    }
+  ],
+  "hints": []
+}
