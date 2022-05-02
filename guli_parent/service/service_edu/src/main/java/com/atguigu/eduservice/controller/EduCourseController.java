@@ -16,7 +16,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/eduservice/course")
-//@EnableSwagger2
 @CrossOrigin
 public class EduCourseController {
 
