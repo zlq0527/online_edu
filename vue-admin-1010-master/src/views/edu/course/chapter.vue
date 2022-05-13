@@ -183,7 +183,6 @@
 // ==============================小节操作====================================
       // 删除小节
       removeVideo(id) {
-        alert(id)
         this.$confirm('此操作将删除小节, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -205,7 +204,6 @@
 
       EditVideo(chapterId){
         this.dialogVideoFormVisible=true
-        alert(1)
         // video.getmes().then(
         //   response=>{
         //

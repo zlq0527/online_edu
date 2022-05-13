@@ -1,15 +1,21 @@
 package com.atguigu.eduservice.controller;
 
 import com.atguigu.commonutils.R;
+import com.atguigu.eduservice.client.VodClient;
 import com.atguigu.eduservice.entity.EduChapter;
 import com.atguigu.eduservice.entity.EduVideo;
 import com.atguigu.eduservice.entity.chapter.ChapterVo;
 import com.atguigu.eduservice.service.EduChapterService;
 import com.atguigu.eduservice.service.EduVideoService;
 import com.atguigu.servicebase.exceptionhandler.GuliException;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -30,6 +36,8 @@ public class EduChapterController {
 	@Autowired
 	EduVideoService eduVideoService;
 
+	@Autowired
+	VodClient vodClient;
 	@GetMapping("getChapterVideo/{courseId}")
 	public R getChapterVideo(@PathVariable String courseId) {
 		List<ChapterVo> eduChapter = eduChapterService.getChapterVideoByCourseId(courseId);
@@ -62,9 +70,26 @@ public class EduChapterController {
 
 	@DeleteMapping("{chapterId}")
 	public R deleteChapter(@PathVariable String chapterId) {
-		boolean flag = eduChapterService.removeById(chapterId);
-		if (!flag) {
-			return R.error().message("删除失败");
+		QueryWrapper<EduVideo> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("chapter_id", chapterId);
+		List<EduVideo> videos = eduVideoService.list(queryWrapper);
+		System.out.println(videos);
+		try {
+			for (int i = 0; i < videos.size(); i++) {
+				String videochapterid = videos.get(i).getChapterId();
+				String videoSourceId = videos.get(i).getVideoSourceId();
+				String videoId = videos.get(i).getId();
+				if (StringUtils.isNotEmpty(videoSourceId)) {
+					vodClient.removevideo(videoSourceId);
+				}
+				eduVideoService.removeById(videoId);
+				if (StringUtils.isNotEmpty(videochapterid)) {
+					eduChapterService.removeById(videochapterid);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new GuliException(2000, "删除失败");
 		}
 		return R.ok();
 	}
