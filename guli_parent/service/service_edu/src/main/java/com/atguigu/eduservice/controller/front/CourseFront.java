@@ -33,7 +33,9 @@ public class CourseFront {
 	@Autowired
 	EduChapterService chapterService;
 
-	//查询课程详情
+	/**
+	 * 	查询课程详情
+	 */
 	@PostMapping("getFrontCourse/{page}/{limit}")
 	public R getFrontCourse(@PathVariable long page, @PathVariable long limit, @RequestBody(required = false) CourseFrontVo courseFrontVo) {
 		Page<EduCourse> pagecourse = new Page<>(page, limit);

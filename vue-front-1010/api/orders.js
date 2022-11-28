@@ -5,7 +5,7 @@ export default{
     //生成订单接口
     createOrders(courseId){
         return request({
-            url: `/order/createOrder/${courseId}`,
+            url: `/eduorder/order/createOrder/${courseId}`,
             method: 'post'
         })
     },
@@ -14,7 +14,7 @@ export default{
     //根据OrderNo查询订单详情接口
     getOrderByOrderNo(orderNo){
         return request({
-            url: `/order/getOrderInfo/${orderNo}`,
+            url: `/eduorder/order/getOrderInfo/${orderNo}`,
             method: 'get'
         })
     },
@@ -22,7 +22,7 @@ export default{
     //生成二维码的接口
     createWxNativePay(orderNo){
         return request({
-            url: `/order/pay/createNative/${orderNo}`,
+            url: `/eduorder/order/pay/createNative/${orderNo}`,
             method: 'get'
         })
     },
@@ -30,7 +30,7 @@ export default{
     //查询订单状态的接口
     queryOrderStatus(orderNo){
         return request({
-            url: `/order/pay/queryPayStatus/${orderNo}`,
+            url: `/eduorder/order/pay/queryPayStatus/${orderNo}`,
             method: 'get'
         })
     }

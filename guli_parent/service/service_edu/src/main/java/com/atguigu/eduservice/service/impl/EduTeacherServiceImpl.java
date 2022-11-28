@@ -27,13 +27,13 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
 	public Map<String, Object> getTeacherFrontList(Page<EduTeacher> teacherPage) {
 		QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
 		wrapper.orderByAsc("id");
-		baseMapper.selectPage(teacherPage,wrapper);//mybatis自带分页查询
+		baseMapper.selectPage(teacherPage,wrapper);
 
-		List<EduTeacher> records = teacherPage.getRecords(); //总记录
+		List<EduTeacher> records = teacherPage.getRecords();
 		long pages = teacherPage.getPages();
 		long current = teacherPage.getCurrent();
-		long size = teacherPage.getSize(); //一页多少条数
-		long total = teacherPage.getTotal(); // 总条数
+		long size = teacherPage.getSize();
+		long total = teacherPage.getTotal();
 		boolean hasNext = teacherPage.hasNext();
 		boolean hasPrevious = teacherPage.hasPrevious();
 		Map<String,Object> map = new HashMap<>();

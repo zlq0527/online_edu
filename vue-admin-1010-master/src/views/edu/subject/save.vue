@@ -16,6 +16,7 @@
           :auto-upload="false"
           :on-success="fileUploadSuccess"
           :on-error="fileUploadError"
+          before-upload="beforeUpload"
           :disabled="importBtnDisabled"
           :limit="1"
           :action="BASE_API+'/eduservice/subject/addSubject'"

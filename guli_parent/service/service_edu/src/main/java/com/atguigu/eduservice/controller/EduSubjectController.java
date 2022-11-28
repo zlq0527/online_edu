@@ -1,14 +1,14 @@
 package com.atguigu.eduservice.controller;
 
 import com.atguigu.commonutils.R;
-import com.atguigu.eduservice.entity.EduSubject;
-import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.OneSubject;
 import com.atguigu.eduservice.service.EduSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -26,13 +26,12 @@ public class EduSubjectController {
 	@Autowired
 	private EduSubjectService eduSubjectService;
 
-	//添加课程分类
-	//获取上传过来的文件，把文件内容读取出来
 	@PostMapping("/addSubject")
 	public R addSubject(MultipartFile file) {
-		//获取上传的excel文件 MultipartFile
+		if (file.isEmpty()) {
+			return R.error().message("文件不能为空！");
+		}
 		eduSubjectService.saveSubject(file, eduSubjectService);
-		//判断返回集合是否为空
 		return R.ok();
 	}
 

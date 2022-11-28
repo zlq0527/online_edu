@@ -5,6 +5,8 @@ import com.atguigu.commonutils.R;
 import com.atguigu.educenter.entity.UcenterMember;
 import com.atguigu.educenter.entity.vo.RegisterVo;
 import com.atguigu.educenter.service.UcenterMemberService;
+import com.atguigu.orderVo.UcenterMemberOrder;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,9 +39,17 @@ public class UcenterMemberController {
 
 	@GetMapping("getMemberInfo")
 	public R getMemberinfo(HttpServletRequest request) {
-		String memberid = JwtUtils.getMemberIdByJwtToken(request);//去header里取token
+		String memberid = JwtUtils.getMemberIdByJwtToken(request);
 		UcenterMember ucenterMember = ucenterMemberService.getById(memberid);
 		return R.ok().data("member", ucenterMember);
+	}
+
+	@GetMapping("getUserInfoOrder/{id}")
+	public UcenterMemberOrder getUserInfoOrder(@PathVariable("id") String id) {
+		UcenterMember member = ucenterMemberService.getById(id);
+		UcenterMemberOrder memberOrder = new UcenterMemberOrder();
+		BeanUtils.copyProperties(member, memberOrder);
+		return memberOrder;
 	}
 }
 
