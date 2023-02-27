@@ -33,20 +33,19 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
 		String mobile = user.getMobile();
 		String password = user.getPassword();
 		if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)) {
-			throw new GuliException(20000, "登录失败");
+			throw new GuliException(20000, "手机号或密码不能为空");
 		}
-		String mobile1 = user.getMobile();
 		QueryWrapper<UcenterMember> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("mobile", mobile1);
+		queryWrapper.eq("mobile", mobile);
 		UcenterMember ucenterMember = baseMapper.selectOne(queryWrapper);
 		if (ucenterMember == null) {
-			throw new GuliException(20001, "登录失败");
+			throw new GuliException(20001, "账号不存在");
 		}
 		if (!ucenterMember.getPassword().equals(MD5.encrypt(password))) {
 			throw new GuliException(20001, "密码错误");
 		}
 		if (ucenterMember.getIsDisabled()) {
-			throw new GuliException(20001, "登录失败");
+			throw new GuliException(20001, "登录失败，用户被禁用");
 		}
 		String jwtToken = JwtUtils.getJwtToken(ucenterMember.getId(), ucenterMember.getNickname());
 		return jwtToken;

@@ -2,7 +2,7 @@ package com.atguigu.eduservice.controller;
 
 
 import com.atguigu.commonutils.R;
-import com.atguigu.eduservice.config.COSUploadUtil;
+import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.vo.TeacherQuery;
 import com.atguigu.eduservice.service.EduTeacherService;
@@ -11,14 +11,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +33,6 @@ import java.util.List;
 public class EduTeacherController {
 
     //访问地址： http://localhost:8080/eduservice/teacher/findAll
-    //把service注入
     @Autowired
     private EduTeacherService teacherService;
 
@@ -75,8 +70,6 @@ public class EduTeacherController {
     }
 
 //    3 分页查询讲师的方法
-//    current 当前页
-//    limit 每页记录数
     @ApiOperation("分页查询讲师的方法")
     @GetMapping("pageTeacher/{current}/{limit}")
     public R pageListTeacher(@PathVariable long current,
@@ -91,8 +84,6 @@ public class EduTeacherController {
         teacherService.page(pageTeacher,null);
         long total = pageTeacher.getTotal();//总记录数
         List<EduTeacher> records = pageTeacher.getRecords(); //数据list集合
-
-
         return R.ok().data("total",total).data("rows",records);
     }
 
