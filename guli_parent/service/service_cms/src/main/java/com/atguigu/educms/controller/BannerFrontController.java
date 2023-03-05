@@ -2,6 +2,7 @@ package com.atguigu.educms.controller;
 import com.atguigu.commonutils.R;
 import com.atguigu.educms.entity.CrmBanner;
 import com.atguigu.educms.service.CrmBannerService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,6 +37,9 @@ public class BannerFrontController {
 	@GetMapping("getAllBanner")
 	@Cacheable(key = "'getAllBanner'",value ="banner")
 	public R getAllBanner() {
+		QueryWrapper<CrmBanner> queryWrapper = new QueryWrapper<>();
+		queryWrapper.orderByDesc("sort");
+		queryWrapper.last("limit 2");
 		List<CrmBanner> list = bannerService.list(null);
 		return R.ok().data("list", list);
 	}

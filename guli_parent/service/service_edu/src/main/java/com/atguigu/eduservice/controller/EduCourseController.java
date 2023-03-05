@@ -1,13 +1,17 @@
 package com.atguigu.eduservice.controller;
 import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.entity.EduCourse;
+import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.service.EduCourseService;
+import com.atguigu.eduservice.service.EduTeacherService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @ Author     ：赵棱泉.
@@ -21,6 +25,8 @@ public class EduCourseController {
 
 	@Autowired
 	EduCourseService eduCourseService;
+	@Autowired
+	EduTeacherService teacherService;
 
 	@GetMapping("getCourseInfo/{id}")
 	public R findCorsebyId(@PathVariable String id) {
@@ -40,6 +46,12 @@ public class EduCourseController {
 	public R getCourseList() {
 		System.out.println("查询所有的!!!");
 		List<EduCourse> list = eduCourseService.list(null);
+		list.forEach(n-> {
+			QueryWrapper<EduTeacher> queryWrapper = new QueryWrapper<>();
+			queryWrapper.eq("id", n.getTeacherId());
+			EduTeacher teacher = teacherService.getOne(queryWrapper);
+			n.setTeacherId(teacher.getName());
+		});
 		return R.ok().data("list", list);
 	}
 

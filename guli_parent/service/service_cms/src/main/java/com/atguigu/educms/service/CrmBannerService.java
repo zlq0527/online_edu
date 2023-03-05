@@ -1,6 +1,7 @@
 package com.atguigu.educms.service;
 
 import com.atguigu.educms.entity.CrmBanner;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.stereotype.Service;
 
@@ -14,4 +15,5 @@ import org.springframework.stereotype.Service;
  */
 public interface CrmBannerService extends IService<CrmBanner> {
 
+    void pageQuery(Page<CrmBanner> pageBanner, CrmBanner bannerQuery);
 }

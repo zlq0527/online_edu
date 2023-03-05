@@ -42,7 +42,6 @@ public class MsmController {
 			return R.ok().data(map);
 		} else {
 			return R.error().message("短信发送失败!!!");
-
 		}
 	}
 }

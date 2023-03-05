@@ -4,11 +4,13 @@ import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.commonutils.R;
 import com.atguigu.educenter.entity.UcenterMember;
 import com.atguigu.educenter.entity.vo.RegisterVo;
+import com.atguigu.educenter.entity.vo.UcenterMemberVo;
 import com.atguigu.educenter.service.UcenterMemberService;
 import com.atguigu.orderVo.UcenterMemberOrder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/educenter/member")
 @CrossOrigin
+@EnableSwagger2
 public class UcenterMemberController {
 
 	@Autowired
@@ -50,6 +53,14 @@ public class UcenterMemberController {
 		UcenterMemberOrder memberOrder = new UcenterMemberOrder();
 		BeanUtils.copyProperties(member, memberOrder);
 		return memberOrder;
+	}
+	//根据用户id查询用户信息
+	@PostMapping("/getMemberInfoById/{memberId}")
+	public UcenterMemberVo getMemberInfoById(@PathVariable String memberId){
+		UcenterMember member = ucenterMemberService.getById(memberId);
+		UcenterMemberVo memberVo = new UcenterMemberVo();
+		BeanUtils.copyProperties(member,memberVo);
+		return memberVo;
 	}
 }
 

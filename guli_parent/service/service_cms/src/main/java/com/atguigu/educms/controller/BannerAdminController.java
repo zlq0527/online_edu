@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @ Author     ：zhaolengquan.
  * @ Date       ：Created in 18:38 2022/4/23
@@ -17,22 +19,28 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @CrossOrigin
-@RequestMapping("")
+@RequestMapping("/educms/bannerAdmin")
 public class BannerAdminController {
     @Autowired
     CrmBannerService bannerService;
 
-    @GetMapping("/pagebanner/{page}/{limit}")
-    public R pageBanner(@PathVariable Long page,@PathVariable Long limit) {
+    @PostMapping("/pageBanner/{page}/{limit}")
+    public R pageBanner(@PathVariable Long page, @PathVariable Long limit,
+                        @RequestBody(required = false) CrmBanner bannerQuery) {
         Page<CrmBanner> pageBanner = new Page<>(page, limit);
-        IPage<CrmBanner> rows = bannerService.page(pageBanner, null);
-        return R.ok().data("count", rows.getTotal()).data("rows", rows.getRecords());
+        bannerService.pageQuery(pageBanner, bannerQuery);
+        return R.ok().data("count", pageBanner.getTotal()).data("rows", pageBanner.getRecords());
     }
 
-    @PostMapping("/addbanner")
+    @PostMapping("/addBanner")
     public R addBanner(@RequestBody CrmBanner banner) {
         bannerService.save(banner);
         return R.ok();
+    }
+
+    @GetMapping("{id}")
+    public void getBannerById(@PathVariable String id) {
+        bannerService.getOne(new QueryWrapper<CrmBanner>().eq("id", id));
     }
 
 }

@@ -37,7 +37,8 @@ public class CourseFront {
 	 * 	查询课程详情
 	 */
 	@PostMapping("getFrontCourse/{page}/{limit}")
-	public R getFrontCourse(@PathVariable long page, @PathVariable long limit, @RequestBody(required = false) CourseFrontVo courseFrontVo) {
+	public R getFrontCourse(@PathVariable long page, @PathVariable long limit,
+							@RequestBody(required = false) CourseFrontVo courseFrontVo) {
 		Page<EduCourse> pagecourse = new Page<>(page, limit);
 		Map<String, Object> map = courseService.getFrontCourseList(pagecourse,courseFrontVo);
 		return R.ok().data(map);

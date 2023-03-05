@@ -37,6 +37,8 @@
 
       <el-table-column prop="title" label="课程名称" width="180" align="center"/>
 
+      <el-table-column prop="teacherId" label="课程讲师" width="180" align="center"/>
+
       <el-table-column label="课程状态" width="180" align="center">
         <template slot-scope="scope">
           {{ scope.row.status==='Normal'?'已发布':'未发布' }}
