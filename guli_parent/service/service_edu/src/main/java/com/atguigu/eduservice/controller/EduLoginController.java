@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class EduLoginController {
 
+    /**
+     * 后台Login方法
+     * @return
+     */
     @PostMapping("login")
     public R login(){
         System.out.println("我是login方法");

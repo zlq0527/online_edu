@@ -160,18 +160,19 @@ export const constantRouterMap = [
     ]
   },
 
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: 'Form', icon: 'form' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/comment',
+    component: Layout,
+    name:"评论管理",
+    children: [
+      {
+        path: 'index',
+        name: 'abc',
+        component: () => import('@/views/edu/comment/comment.vue'),
+        meta: { title: '评论管理', icon: 'form' }
+      }
+    ]
+  },
 
   // {
   //   path: '/nested',

@@ -38,9 +38,21 @@ public class BannerAdminController {
         return R.ok();
     }
 
-    @GetMapping("{id}")
-    public void getBannerById(@PathVariable String id) {
-        bannerService.getOne(new QueryWrapper<CrmBanner>().eq("id", id));
+    @GetMapping("/getBannerById/{id}")
+    public R getBannerById(@PathVariable String id) {
+        CrmBanner banner = bannerService.getOne(new QueryWrapper<CrmBanner>().eq("id", id));
+        return R.ok().data("data", banner);
     }
 
+    @PostMapping("/deleteBannerById/{id}")
+    public R deleteBannerById(@PathVariable String id) {
+        bannerService.removeById(id);
+        return R.ok();
+    }
+
+    @PostMapping("/updateBanner")
+    public R updateBanner(@RequestBody CrmBanner banner) {
+        bannerService.saveOrUpdate(banner);
+        return R.ok();
+    }
 }
