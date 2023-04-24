@@ -44,23 +44,18 @@ public class EduCommentController {
     private UcenterClient ucenterClient;
 
     //根据课程id_分页查询课程评论的方法
-    @PostMapping("/getCommentPage/{page}/{limit}")
-    public R getCommentPage(@PathVariable Long page, @PathVariable Long limit, String courseId) {
+    @GetMapping("/getCommentPage/{page}/{limit}/{courseId}")
+    public R getCommentPage(@PathVariable Long page, @PathVariable Long limit, @PathVariable String courseId) {
         Page<EduComment> commentPage = new Page<>(page, limit);
-
         QueryWrapper<EduComment> wrapper = new QueryWrapper<>();
-
         //判断课程id是否为空
         if (!StringUtils.isEmpty(courseId)) {
             wrapper.eq("course_id", courseId);
         }
-
         //按最新排序
         wrapper.orderByDesc("gmt_create");
-
         //数据会被封装到commentPage中
         eduCommentService.page(commentPage, wrapper);
-
         List<EduComment> commentList = commentPage.getRecords();
         long current = commentPage.getCurrent();//当前页
         long size = commentPage.getSize();//一页记录数
@@ -77,7 +72,6 @@ public class EduCommentController {
         map.put("hasPrevious", hasPrevious);
         map.put("hasNext", hasNext);
         map.put("list", commentList);
-
         return R.ok().data(map);
     }
 

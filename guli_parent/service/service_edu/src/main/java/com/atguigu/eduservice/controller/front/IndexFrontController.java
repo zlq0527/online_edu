@@ -1,8 +1,10 @@
 package com.atguigu.eduservice.controller.front;
 
 import com.atguigu.commonutils.R;
+import com.atguigu.eduservice.entity.EduComment;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduTeacher;
+import com.atguigu.eduservice.service.EduCommentService;
 import com.atguigu.eduservice.service.EduCourseService;
 import com.atguigu.eduservice.service.EduTeacherService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -28,13 +30,23 @@ public class IndexFrontController {
 	@Autowired
 	EduTeacherService teacherService;
 
+	@Autowired
+	EduCommentService commentService;
+
 
 	@GetMapping("index")
 	public R index() {
 		QueryWrapper<EduCourse> queryWrapper = new QueryWrapper<>();
 		queryWrapper.orderByDesc("id");
 		queryWrapper.last("limit 4");
+		queryWrapper.eq("status", "Normal");
 		List<EduCourse> courseList = courseService.list(queryWrapper);
+		courseList.stream().forEach(n->{
+			QueryWrapper<EduComment> queryWrapper2 = new QueryWrapper<>();
+			queryWrapper2.eq("course_id", n.getId());
+			int count = commentService.count(queryWrapper2);
+			n.setViewCount(((long) count));
+		});
 
 		QueryWrapper<EduTeacher> queryWrapper1 = new QueryWrapper<>();
 		queryWrapper1.orderByDesc("id");

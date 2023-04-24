@@ -1,19 +1,13 @@
 package com.atguigu.eduservice.service.impl;
 
 import com.alibaba.excel.util.StringUtils;
-import com.atguigu.eduservice.entity.EduChapter;
-import com.atguigu.eduservice.entity.EduCourse;
-import com.atguigu.eduservice.entity.EduCourseDescription;
-import com.atguigu.eduservice.entity.EduVideo;
+import com.atguigu.eduservice.entity.*;
 import com.atguigu.eduservice.entity.FrontVo.CourseFrontVo;
 import com.atguigu.eduservice.entity.FrontVo.CourseWebVo;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.mapper.EduCourseMapper;
-import com.atguigu.eduservice.service.EduChapterService;
-import com.atguigu.eduservice.service.EduCourseDescriptionService;
-import com.atguigu.eduservice.service.EduCourseService;
-import com.atguigu.eduservice.service.EduVideoService;
+import com.atguigu.eduservice.service.*;
 import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -43,6 +37,8 @@ public class EduCourseServiceimpl extends ServiceImpl<EduCourseMapper, EduCourse
     EduVideoService eduVideoService;
 
     @Autowired
+    EduCommentService commentService;
+    @Autowired
     EduCourseDescriptionService eduCourseDescriptionService;
 
     @Override
@@ -56,6 +52,9 @@ public class EduCourseServiceimpl extends ServiceImpl<EduCourseMapper, EduCourse
         eduCourseDescriptionService.removeById(courseId);
         eduChapterService.remove(queryWrapper);
         eduVideoService.remove(queryWrapper1);
+        QueryWrapper<EduComment> queryWrapper2 = new QueryWrapper<>();
+        queryWrapper2.eq("course_id", courseId);
+        commentService.remove(queryWrapper2);
         if (result == 0) {
             throw new GuliException(20003, "删除课程失败");
         }
@@ -139,8 +138,13 @@ public class EduCourseServiceimpl extends ServiceImpl<EduCourseMapper, EduCourse
             wrapper.orderByDesc("price");
         }
         baseMapper.selectPage(teacherPage, wrapper);
-
         List<EduCourse> records = teacherPage.getRecords();
+        records.stream().forEach(n->{
+            QueryWrapper<EduComment> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("course_id", n.getId());
+            int count = commentService.count(queryWrapper);
+            n.setViewCount(((long) count));
+        });
         Map<String, Object> map = new HashMap<>();
         map.put("items", records);
         map.put("current", teacherPage.getCurrent());

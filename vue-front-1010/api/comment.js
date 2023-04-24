@@ -2,9 +2,8 @@ import request from '@/utils/request'
 export default {
     getPageList(page, limit, courseId) {
         return request({
-            url: `/eduservice/edu-comment/getCommentPage/${page}/${limit}`,
-            method: 'post',
-            params: courseId
+            url: `/eduservice/edu-comment/getCommentPage/${page}/${limit}/${courseId}`,
+            method: 'get',
         })
     },
     addComment(comment) {
